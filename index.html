@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Block 2 Kaizen Questions Quiz</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222}
+.container{max-width:900px;margin:30px auto;padding:20px}
+.card{background:#fff;border-radius:14px;padding:28px;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+h1{margin-top:0} .progress{color:#666;margin-bottom:20px}
+.question{white-space:pre-line;font-size:19px;line-height:1.55;margin-bottom:22px}
+.choice{display:block;border:1px solid #ccc;border-radius:10px;padding:14px;margin:10px 0;cursor:pointer}
+.choice:hover{background:#f0f4f8}
+.choice input{margin-right:10px}
+button{border:0;border-radius:10px;padding:12px 20px;font-size:16px;cursor:pointer;background:#222;color:white;margin-right:8px}
+button:disabled{opacity:.5;cursor:not-allowed}
+.nav{margin-top:24px;display:flex;justify-content:space-between}
+#result{margin-top:20px;font-weight:bold}
+#list{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card">
+<h1>Block 2 Kaizen Questions</h1>
+<div class="progress" id="progress"></div>
+<div class="question" id="question"></div>
+<div id="choices"></div>
+<div class="nav">
+<button id="prev">Previous</button>
+<button id="next">Next</button>
+</div>
+<div id="result"></div>
+</div>
+</div>
+<script>
+const questions = [{"q": "A 41-year-old woman presents to the sports medicine clinic with progressive left shoulder pain and weakness that began after lifting heavy boxes several weeks ago. She reports difficulty reaching overhead and has pain when attempting to abduct her arm. Physical examination raises concern for a rotator cuff tear.\nWhich of the following imaging modalities is most appropriate for evaluating the injured muscle and tendon?", "opts": ["Computed tomography (CT)", "Magnetic resonance imaging (MRI)", "Fluoroscopy", "Plain radiographs (X-ray)", "Positron emission tomography (PET)"]}, {"q": "A 34-year-old man presents with recurrent painful blisters on his hands after minor trauma. A skin biopsy demonstrates separation of the epidermis from the underlying basement membrane. The dermatologist explains that the integrity of epithelial tissue depends on specialized cell junctions that provide both cell-cell adhesion and cell-basement membrane attachment.\nWhich of the following best describes the functions of desmosomes and hemidesmosomes?", "opts": ["Desmosomes attach epithelial cells to the basement membrane, whereas hemidesmosomes mediate cell-cell adhesion through cadherins.", "Both desmosomes and hemidesmosomes use cadherins to connect adjacent epithelial cells.", "Desmosomes mediate cell-cell adhesion through cadherins, while hemidesmosomes anchor epithelial cells to the basement membrane through integrins.", "Desmosomes use integrins to bind intermediate filaments, whereas hemidesmosomes use cadherins to attach neighboring epithelial cells.", "Both desmosomes and hemidesmosomes utilize integrins to anchor epithelial cells to the extracellular matrix."]}, {"q": "As a part of her thesis project, a graduate student takes a sample from a bovine organ. She has just learned about the basic structure of epithelial tissue, so she takes a slice, stains it, and fixes it onto a microscope slide. She is aware that most epithelial tissue is anchored by its basal lamina to underlying tissues. These underlying tissues may be connective tissue, muscular tissue, fascia, or less commonly, other epithelial cells. Upon further magnification of her histological slide, she sees two squamous epithelial cell layers that are fused on either side of a single layer of basal lamina.\nWhich organ did she most likely sample?", "opts": ["Epidermis", "Esophagus", "Kidney", "Vagina"]}, {"q": "A 30-year-old man presents to a genetic counseling session with his wife. The man was diagnosed shortly after birth with a metabolic disorder characterized by poor feeding, vomiting, lethargy, and a distinctive sweet-smelling urine odor. He has managed the condition through strict dietary restrictions. The couple is planning to have a child and is concerned about the likelihood of their future child inheriting the disease. The wife has no family history of similar symptoms and is in good health. Genetic testing confirms that she is not a carrier of the gene mutations associated with this disorder.\nWhat is the likelihood of this couple having a child with the same metabolic disorder as the father?", "opts": ["0%", "25%", "50%", "75%", "100%"]}, {"q": "A 17-year-old male presents to clinic with a complaint of recurrent heavy nose bleeds. He has been having them for years and wants to know why. As you diligently take a thorough history, you learn that his father, his uncle (father’s brother), and paternal grandmother and grandfather also have had unusually heavy nosebleeds in their lives. The patient’s mother, brother, maternal grandparents, and his aunt (father’s sister) do not have a history of unusual bleeding. You correctly diagnose that the patient has an inherited Von Willebrand deficiency. You quickly sketch out a pedigree, with the patient designated as “Pt. ”\nWhat is the most likely mode of inheritance for his bleeding disorder?", "opts": ["X-linked", "Autosomal dominant", "Autosomal recessive", "Y-linked"]}, {"q": "Which of the following components is primarily responsible for providing tensile strength to the extracellular matrix (ECM) in connective tissues?", "opts": ["Elastin", "Laminin", "Fibronectin", "Collagen", "Proteoglycans"]}, {"q": "A 34-year-old woman presents for a routine prenatal visit at 18 weeks’ gestation. An ultrasound reveals a fetus with a defect in the lumbar spine with herniation of both meninges and spinal cord through an opening in the vertebral column. The maternal serum alpha-fetoprotein (AFP) level is significantly elevated.\nWhich of the following is the most likely diagnosis?", "opts": ["Spina bifida occulta", "Meningocele", "Myelomeningocele", "Anencephaly", "Encephalocele"]}, {"q": "A 43-year-old man presents to the clinic with involuntary movements, progressively worsening dementia, and depression. He is referred to a neurologist and is ultimately diagnosed with Huntington's disease, an autosomal dominant disorder characterized by trinucleotide repeat expansion. Identify the three-nucleotide sequence that is repeated in Huntington's Disease.", "opts": ["CGG", "CAG", "GAA", "CTG", "GTA"]}, {"q": "Collagen synthesis and assembly is a multi-step process that involves events which occur both intracellularly and extracellularly. The initial intracellular step of collagen fibril development involves which of the following changes to the pro-alpha chain?", "opts": ["Hydroxylation of proline and lysine residues", "Hydroxylation of proline residues only", "Glycosylation of proline and lysine residues", "Glycosylation of lysine residues only", "Disulfide bond formation between 3 alpha-chains"]}, {"q": "25-year-old female comes into an urgent care clinic after sustaining a laceration on her thumb while dicing cucumbers. The connective tissue underneath her epidermis contains many resident cells that enable the connective tissue to function properly in different physiologic or pathologic circumstances. Which cell type is responsible for synthesizing collagen, elastic fibers, reticular fibers, and ground substance, and can undergo mitosis during wound healing?", "opts": ["Adipocyte", "Fibroblast", "Chondroblast", "Osteoblast", "Pericyte"]}, {"q": "During muscle contraction, which of the following proteins binds calcium ions?", "opts": ["Myosin", "Actin", "Tropomyosin", "Troponin", "Dystrophin"]}, {"q": "A 2-day-old newborn is brought to the neonatal intensive care unit due to respiratory difficulties and poor feeding. The infant was born at term via uncomplicated vaginal delivery. Physical examination reveals a large lumbosacral myelomeningocele and hydrocephalus. An MRI of the brain shows downward displacement of the cerebellar vermis and brainstem through the foramen magnum.\nWhich of the following is the most likely diagnosis?", "opts": ["Chiari I malformation", "Chiari II malformation", "Dandy-Walker malformation", "Syringomyelia", "Holoprosencephaly"]}, {"q": "A 22-year-old woman presents to a genetics clinic for evaluation of her risk of passing on a genetic condition. She is concerned because her sister has Turner syndrome, a condition associated with the absence of one X chromosome. The patient’s karyotype is normal (46,XX), and she is in good health with no known medical issues. During the discussion, the geneticist mentions the concept of X-inactivation and Barr bodies.\nWhich of the following correctly describes these terms?", "opts": ["All her somatic cells have two active X chromosomes.", "X-inactivation occurs randomly in each cell, and one X chromosome forms a Barr body.", "Barr bodies are present in males but not in females.", "X-inactivation does not occur in individuals with Turner syndrome.", "Barr bodies are only found in the germline cells of females."]}, {"q": "QUESTION\nA 34-year-old woman presents to a genetic counseling session with her husband. The woman has a mild form of sickle cell disease. Her husband has two siblings with sickle cell disease. They are concerned about the chances of their future children being affected. The genetic counselor explains that, although sickle cell disease is typically recessive, their children have a higher chance of being affected.\nWhich of the following genetic concepts best explains the inheritance pattern that may be seen in this couple’s children?", "opts": ["Genetic anticipation", "Germline mosaicism", "Heteroplasmy", "Pseudodominant inheritance", "Incomplete penetrance"]}, {"q": "Which of the following correctly defines “balanced polymorphism”?", "opts": ["Disruptive selection for extreme phenotypes at the tail ends of distribution and against the mean", "The presence of two or more versions of a gene existing in a population with stable frequency.", "An influx of new individuals with genetic mutations matching the rate of efflux of individuals with genetic mutations from the population.", "A deleterious mutation of a gene remaining in high frequency in the population due to the fact the population is relatively small and isolated."]}, {"q": "Following injury to a capillary bed, what cell population is primarily responsible for regeneration of endothelial cells?", "opts": ["Satellite cells", "Podocytes", "Pericytes", "Fibroblasts", "Monocytes"]}, {"q": "There is a marked increase in frequency of maple syrup urine disease (MSUD) in Amish communities. Which of the following is the most likely explanation for this increased frequency?", "opts": ["A natural disaster wiped out a large portion of the Amish community, causing a loss of genetic diversity.", "A small population of settlers established modern Amish communities, which allowed for greater frequency of MSUD allele.", "The mutation that causes MSUD conveyed a selective advantage in the original environment of the ancestors to modern Amish Americans.", "The gene mutation for maple syrup disease is on the X chromosome, resulting in an increased likelihood of MSUD within this group."]}, {"q": "A couple is pregnant with their first child. The male’ s sister has sickle cell disease. Neither of their parents nor the male show any symptoms. The female shows no symptoms and has no family history of the disease. The disease prevalence is 1 in 2000. Assume the disease shows complete penetrance and that the following assumptions are met: infinitely large population, no mutations, no selection, random mating, and no migration.\nWhat are the odds that their child will have the disease?", "opts": ["0.0006", "0.0036", "0.0072", "0.0144", "0.0288"]}];
+let current = 0;
+const answers = Array(questions.length).fill(null);
+
+function render(){
+ const q=questions[current];
+ document.getElementById('progress').textContent=`Question ${current+1} of ${questions.length}`;
+ document.getElementById('question').textContent=q.q;
+ const box=document.getElementById('choices'); box.innerHTML='';
+ q.opts.forEach((opt,i)=>{
+   const label=document.createElement('label'); label.className='choice';
+   const input=document.createElement('input'); input.type='radio'; input.name='choice';
+   input.value=i; input.checked=answers[current]===i;
+   input.onchange=()=>answers[current]=i;
+   label.appendChild(input);
+   label.appendChild(document.createTextNode(String.fromCharCode(65+i)+'. '+opt));
+   box.appendChild(label);
+ });
+ document.getElementById('prev').disabled=current===0;
+ document.getElementById('next').textContent=current===questions.length-1?'Finish':'Next';
+ document.getElementById('result').textContent='';
+}
+document.getElementById('prev').onclick=()=>{if(current>0){current--;render();}};
+document.getElementById('next').onclick=()=>{
+ if(answers[current]===null){document.getElementById('result').textContent='Please select an answer.';return;}
+ if(current<questions.length-1){current++;render();}
+ else {
+   const answered=answers.filter(x=>x!==null).length;
+   document.getElementById('result').textContent=`You completed all ${answered} questions.`;
+ }
+};
+render();
+</script>
+</body>
+</html>
